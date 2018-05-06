@@ -1,0 +1,17 @@
+---
+- name: Clone Repository
+  git:
+    repo: 'https://github.com/ISEMS/isems-app.git'
+    dest: /home/{{ ansible_ssh_user }}/isems-app
+
+- name: Install dependencies
+  command: yarn install
+  args:
+    chdir: /home/{{ansible_ssh_user }}/isems-app
+
+- name: Build
+  command: yarn build
+  environment:
+    REACT_APP_API_URL: "http://10.230.77.226/api/measurements/latest"
+  args:
+    chdir: /home/{{ansible_ssh_user }}/isems-app

@@ -1,0 +1,45 @@
+---
+- name: install required packages
+  become: yes
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - uwsgi
+    - uwsgi-plugin-python3
+    - python3-pip
+
+- name: Clone Data Collector Repository
+  git:
+    repo: 'https://github.com/ISEMS/isems-data-collector.git'
+    dest: /home/{{ ansible_ssh_user }}/isems-data-collector
+
+- name: Install virtualenv
+  pip:
+    name: virtualenv
+    state: present
+
+- name: install requirements
+  pip:
+    requirements: requirements.txt
+    chdir: /home/{{ ansible_ssh_user }}/isems-data-collector
+    virtualenv: /home/{{ ansible_ssh_user }}/isems-data-collector/virtualenv
+
+- name: Create uwsgi config
+  template:
+    src: uwsgi-isems.ini.j2
+    dest: /etc/uwsgi/apps-enabled/uwsgi-isems.ini
+    backup: yes
+  become: yes
+
+- name: Restart uwsgi
+  systemd:
+    name: uwsgi
+    state: restarted
+  become: yes
+
+- name: Add cronjob to download Data
+  cron:
+    name: "update isems-data"
+    minute: "/15"
+    job: "env DATABASE_URL=sqlite:////home/{{ ansible_ssh_user }}/isems-data-collector.sqlite /home/{{ ansible_ssh_user }}/isems-data-collector/virtualenv/bin/flask update_data"

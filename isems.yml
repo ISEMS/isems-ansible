@@ -1,0 +1,37 @@
+---
+- name: Manage ISEMS-PI
+  hosts: isems-raspi
+  remote_user: pi
+  become_method: sudo
+
+  roles:
+    - role: jdauphant.nginx
+      become: true
+      gzip:
+        - gzip: on
+      upstream:
+        - upstream isems-data-collector { server unix:///tmp/uwsgi-isems-data-collector.sock; }
+      nginx_http_params:
+        - sendfile "on"
+        - access_log "/var/log/nginx/access.log"
+      nginx_sites:
+        isems:
+          - listen 80
+          - location /api/ {
+              rewrite /api/(.*) /$1 break;
+              uwsgi_pass   isems-data-collector;
+              include      /etc/nginx/uwsgi_params;
+              add_header Access-Control-Allow-Origin *;
+            }
+          - location / {
+              root /home/{{ansible_ssh_user}}/isems-app/build;
+              index index.html;
+            }
+    - role: geerlingguy.git
+      become: true
+    - role: geerlingguy.nodejs
+      become: true
+    - role: ocha.yarn
+      become: true
+    - frontend
+    - flask

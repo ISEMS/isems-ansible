@@ -1,0 +1,2 @@
+[isems-raspi]
+10.230.77.226    ansible_user=pi    ansible_python_interpreter=/usr/bin/python3

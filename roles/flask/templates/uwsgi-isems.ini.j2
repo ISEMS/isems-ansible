@@ -1,0 +1,20 @@
+[uwsgi]
+
+plugins = python
+socket = /tmp/uwsgi-isems-data-collector.sock
+home = /home/{{ansible_ssh_user}}/isems-data-collector/virtualenv
+python-path = /home/{{ ansible_ssh_user }}/isems-data-collector
+processes = 4
+max-requests = 5000
+master = 1
+stats = /tmp/uwsgi_stats.sock
+log-reopen = 1
+wsgi-file = /home/{{ansible_ssh_user}}/isems-data-collector/app.py
+callable = app
+
+env = DATABASE_URL=sqlite:////home/{{ ansible_ssh_user }}/isems-data-collector.sqlite
+
+# Disable exceptions when nginx closes connection before finished request
+ignore-sigpipe = true
+ignore-write-errors = true
+disable-write-exception = true
