@@ -7,10 +7,11 @@
   roles:
     - role: jdauphant.nginx
       become: true
-      gzip:
-        - gzip: on
-      upstream:
-        - upstream isems-data-collector { server unix:///tmp/uwsgi-isems-data-collector.sock; }
+      nginx_configs:
+        gzip:
+          - gzip on
+        upstream:
+          - upstream isems-data-collector { server unix:///tmp/uwsgi-isems-data-collector.sock; }
       nginx_http_params:
         - sendfile "on"
         - access_log "/var/log/nginx/access.log"
