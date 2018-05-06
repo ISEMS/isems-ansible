@@ -12,7 +12,7 @@
 - name: Clone Data Collector Repository
   git:
     repo: 'https://github.com/ISEMS/isems-data-collector.git'
-    dest: /home/{{ ansible_ssh_user }}/isems-data-collector
+    dest: "{{ project_path }}"
 
 - name: Install virtualenv
   pip:
@@ -22,8 +22,8 @@
 - name: install requirements
   pip:
     requirements: requirements.txt
-    chdir: /home/{{ ansible_ssh_user }}/isems-data-collector
-    virtualenv: /home/{{ ansible_ssh_user }}/isems-data-collector/virtualenv
+    chdir: "{{ project_path }}"
+    virtualenv: "{{ virtualenv_path }}"
 
 - name: Create uwsgi config
   template:
@@ -42,4 +42,4 @@
   cron:
     name: "update isems-data"
     minute: "/15"
-    job: "env DATABASE_URL=sqlite:////home/{{ ansible_ssh_user }}/isems-data-collector.sqlite /home/{{ ansible_ssh_user }}/isems-data-collector/virtualenv/bin/flask update_data"
+    job: "env FLASK_APP={{ project_path }}/app.py DATABASE_URL={{database_url}} {{ virtualenv_path }}/bin/flask update_data"

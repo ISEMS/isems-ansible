@@ -1,0 +1,4 @@
+---
+project_path: "/home/{{ ansible_ssh_user }}/isems-data-collector"
+virtualenv_path: "{{ project_path }}/virtualenv"
+database_url: "sqlite:////home/{{ ansible_ssh_user }}/isems-data-collector.sqlite"
