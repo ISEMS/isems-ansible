@@ -27,6 +27,7 @@
           - location / {
               root /home/{{ansible_ssh_user}}/isems-app/build;
               index index.html;
+              try_files $uri /index.html =404;
             }
     - role: geerlingguy.git
       become: true
