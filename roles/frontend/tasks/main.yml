@@ -5,7 +5,7 @@
     dest: /home/{{ ansible_ssh_user }}/isems-app
 
 - name: Install dependencies
-  command: yarn install
+  command: yarn install --pure-lockfile
   args:
     chdir: /home/{{ansible_ssh_user }}/isems-app
 
