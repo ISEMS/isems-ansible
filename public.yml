@@ -1,8 +1,13 @@
 ---
-- name: Manage ISEMS-PI
-  hosts: isems-raspi
+- name: Manage Public API
+  hosts: isems-public
   remote_user: pi
   become_method: sudo
+
+  vars:
+    certbot_auto_renew_user: "{{ ansible_user }}"
+    certbot_auto_renew_hour: 2
+    certbot_auto_renew_minute: 10
 
   roles:
     - role: jdauphant.nginx
@@ -18,23 +23,20 @@
       nginx_sites:
         isems:
           - listen 80
-          - location /api/ {
-              rewrite /api/(.*) /$1 break;
+          - server_name api.isems.de
+          - location / {
               uwsgi_pass   isems-data-collector;
               include      /etc/nginx/uwsgi_params;
               add_header Access-Control-Allow-Origin *;
             }
-          - location / {
-              root /home/{{ansible_ssh_user}}/isems-app/build;
-              index index.html;
-              try_files $uri /index.html =404;
-            }
+          - listen 443 ssl # managed by Certbot
+          - ssl_certificate /etc/letsencrypt/live/api.isems.de/fullchain.pem # managed by Certbot
+          - ssl_certificate_key /etc/letsencrypt/live/api.isems.de/privkey.pem # managed by Certbot
+          - include /etc/letsencrypt/options-ssl-nginx.conf # managed by Certbot
+          - ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem # managed by Certbot
+
     - role: geerlingguy.git
       become: true
-    - role: geerlingguy.nodejs
+    - role: geerlingguy.certbot
       become: true
-    - role: ocha.yarn
-      become: true
-    - frontend
     - flask
-    - sync
