@@ -18,6 +18,7 @@
   pip:
     name: virtualenv
     state: present
+  become: yes
 
 - name: install requirements
   pip:
