@@ -13,6 +13,9 @@ wsgi-file = {{ project_path }}/app.py
 callable = app
 
 env = DATABASE_URL={{ database_url }}
+{% if sentry_dsn is defined %}
+env = SENTRY_DSN={{ sentry_dsn }}
+{% endif %}
 
 # Disable exceptions when nginx closes connection before finished request
 ignore-sigpipe = true
