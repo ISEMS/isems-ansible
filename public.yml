@@ -1,7 +1,7 @@
 ---
 - name: Manage Public API
   hosts: isems-public
-  remote_user: pi
+  remote_user: root
   become_method: sudo
 
   vars:
@@ -21,7 +21,14 @@
           3535
 
   roles:
+    - role: geerlingguy.git
+      remote_user: pi
+      become: true
+    - role: geerlingguy.certbot
+      remote_user: pi
+      become: true
     - role: jdauphant.nginx
+      remote_user: pi
       become: true
       nginx_configs:
         gzip:
@@ -46,8 +53,5 @@
           - include /etc/letsencrypt/options-ssl-nginx.conf # managed by Certbot
           - ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem # managed by Certbot
 
-    - role: geerlingguy.git
-      become: true
-    - role: geerlingguy.certbot
-      become: true
-    - flask
+    - role: flask
+      remote_user: pi
