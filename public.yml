@@ -8,6 +8,16 @@
     certbot_auto_renew_user: "{{ ansible_user }}"
     certbot_auto_renew_hour: 2
     certbot_auto_renew_minute: 10
+    certbot_certs:
+      - domains:
+        - api.isems.de
+
+    certbot_admin_email: certbot-isems@k-nut.eu
+
+    certbot_create_if_missing: true
+    certbot_create_method: standalone
+    certbot_create_standalone_stop_services: []
+
     sentry_dsn: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           30353031313164636137666436343236353063356234656361653662333739383736303362633061
@@ -47,11 +57,8 @@
               include      /etc/nginx/uwsgi_params;
               add_header Access-Control-Allow-Origin *;
             }
-          - listen 443 ssl # managed by Certbot
-          - ssl_certificate /etc/letsencrypt/live/api.isems.de/fullchain.pem # managed by Certbot
-          - ssl_certificate_key /etc/letsencrypt/live/api.isems.de/privkey.pem # managed by Certbot
-          - include /etc/letsencrypt/options-ssl-nginx.conf # managed by Certbot
-          - ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem # managed by Certbot
-
+          - listen 443 ssl
+          - ssl_certificate /etc/letsencrypt/live/api.isems.de/fullchain.pem
+          - ssl_certificate_key /etc/letsencrypt/live/api.isems.de/privkey.pem
     - role: flask
       remote_user: pi
