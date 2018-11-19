@@ -1,0 +1,32 @@
+---
+- name: Make sure we have a 'wheel' group
+  group:
+    name: wheel
+    state: present
+
+- name: Add `pi` user with wheel group
+  user:
+    name: pi
+    shell: /bin/bash
+    groups: wheel
+    append: yes
+
+- name: Set authorized key for administration
+  authorized_key:
+    user: pi
+    state: present
+    key: https://github.com/k-nut.keys
+
+- name: Set authorized key for sync
+  authorized_key:
+    user: pi
+    state: present
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCoNuEiG0huCEyRb4FQ0rq4Dmfeea06Ah5WgucCwp9YxTx5K0NllnuUY1bgl8MbeVokF906HKtDfNZXGL9b9RmdxxP+ChtO9llXO9d6eIftV84lOLjdftwB3gULEe3xhLZvN9Eww+5kP5+0unk1LUPKiFusisHftTDOUmKqaI1m263dLss2hpSXo+bCrpDgx3Ml2Z2H6bwkU55H/5o7rh68JUr34KdU+QVlzCSlsEoHvyrzXwXWo2AQZfYd1TKiSQzwoQmzrr5F8gZD02Q66VR3/9Ut1A0iLqsaULMlsm11RZcadRM7SqS/PW6zdZqPAiovwSdCoBPFQjeox0mRLkW5 pi@raspberrypi"
+
+- name: Allow 'wheel' group to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'

@@ -31,6 +31,8 @@
           3535
 
   roles:
+    - role: users
+      remote_user: root
     - role: dev-sec.ssh-hardening
       remote_user: pi
       ssh_use_pam: true
