@@ -1,0 +1,6 @@
+- src: geerlingguy.certbot
+- src: geerlingguy.git
+- src: geerlingguy.nodejs
+- src: jdauphant.nginx
+- src: ocha.yarn
+- src: dev-sec.ssh-hardening

@@ -2,6 +2,12 @@
 
 This repository contains ansible configuration management code for easier deployment of the ISEMS app(s).
 
+To install the required dependencies run
+```
+pip install ansible
+ansible-galaxy install -r requirements.yml
+```
+
 There are two configurations: `isems.yml` for local Raspberry-PI based deployments (this is what you 
 most probably want to use) and `public.yml` which is used for the demot at `app.isems.de`.
 
