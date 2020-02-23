@@ -1,5 +1,2 @@
 [isems-raspi]
-10.230.77.226    ansible_user=pi    ansible_python_interpreter=/usr/bin/python3
-
-[isems-public]
-51.15.206.44     ansible_python_interpreter=/usr/bin/python3
+REPLACE_THIS_WITH_RASPI_IP   ansible_user=pi ansible_ssh_user=pi ansible_python_interpreter=/usr/bin/python3
