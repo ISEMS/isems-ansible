@@ -48,4 +48,4 @@
   cron:
     name: "update isems-data"
     minute: "*/15"
-    job: "env FLASK_APP={{ project_path }}/app.py DATABASE_URL={{database_url}} ISEMS_ROUTER_IPS={{ node_ips | join(',') }} {{ virtualenv_path }}/bin/flask update_data"
+    job: "env FLASK_APP={{ project_path }}/app.py DATABASE_URL={{database_url}} ISEMS_ROUTER_IPS={{ node_ips | join(',') }} {{ virtualenv_path }}/bin/flask update-data"
