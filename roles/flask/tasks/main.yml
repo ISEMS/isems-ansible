@@ -26,6 +26,11 @@
     chdir: "{{ project_path }}"
     virtualenv: "{{ virtualenv_path }}"
 
+- name: initizalize database
+  command: "env DATABASE_URL={{database_url}} {{ virtualenv_path }}/bin/flask db upgrade"
+  args:
+      chdir: "{{ project_path }}"
+
 - name: Create uwsgi config
   template:
     src: uwsgi-isems.ini.j2
