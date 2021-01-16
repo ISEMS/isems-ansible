@@ -13,9 +13,9 @@ The ansible scripts will install some software as root, using sudo. Make sure th
 
 
 ### Checklist
-[ ] User `pi` exists on raspberry pi
-[ ] Local user can ssh into raspberry pi as pi user
-[ ] `pi` user can become `root` using `sudo` without password
+- [ ] User `pi` exists on raspberry pi
+- [ ] Local user can ssh into raspberry pi as pi user
+- [ ] `pi` user can become `root` using `sudo` without password
 
 
 ## Configuration
