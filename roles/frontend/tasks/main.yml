@@ -12,6 +12,6 @@
 - name: Build
   command: yarn build
   environment:
-    REACT_APP_API_URL: "http://10.230.77.226/api"
+    REACT_APP_API_URL: "{{api_endpoint}}"
   args:
     chdir: /home/{{ansible_ssh_user }}/isems-app

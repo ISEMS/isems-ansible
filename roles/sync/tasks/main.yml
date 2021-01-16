@@ -1,6 +1,0 @@
----
-- name: Add cronjob to sync data to public instance
-  cron:
-    name: "sync isems-data with isems-public"
-    minute: "*/15"
-    job: "rsync -e ssh isems-data-collector.sqlite pi@51.15.206.44:/home/pi/isems-data-collector.sqlite"

@@ -26,6 +26,11 @@
     chdir: "{{ project_path }}"
     virtualenv: "{{ virtualenv_path }}"
 
+- name: initizalize database
+  command: "env DATABASE_URL={{database_url}} {{ virtualenv_path }}/bin/flask db upgrade"
+  args:
+      chdir: "{{ project_path }}"
+
 - name: Create uwsgi config
   template:
     src: uwsgi-isems.ini.j2
@@ -43,4 +48,4 @@
   cron:
     name: "update isems-data"
     minute: "*/15"
-    job: "env FLASK_APP={{ project_path }}/app.py DATABASE_URL={{database_url}} ISEMS_ROUTER_IPS={{ node_ips | join(',') }} {{ virtualenv_path }}/bin/flask update_data"
+    job: "env FLASK_APP={{ project_path }}/app.py DATABASE_URL={{database_url}} ISEMS_ROUTER_IPS={{ node_ips | join(',') }} {{ virtualenv_path }}/bin/flask update-data"
