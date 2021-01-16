@@ -1,0 +1,14 @@
+[Unit]
+Description=ISEMS MQTT Listener Service
+After=network.target
+
+[Service]
+Environment=DATABASE_URL={{database_url}}
+Environment=MQTT_SERVER=broker.hivemq.com
+ExecStart={{ virtualenv_path }}/bin/flask subscribe
+WorkingDirectory={{project_path}}
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
