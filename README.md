@@ -7,7 +7,7 @@ The idea is that you use these scripts to install the [isems-app](https://github
 ## Prerequisites
 This tutorial assumes that you are installing the application on a rasperry pi so there should be a user called `pi` on the machine that we are installing to.
 
-Ansible works by sshing into the raspberry pi so you need to mare sure that the user on the machine that you are running the ansible commands with can ssh into the raspberry pi as the pi user. To do so add your `~/.ssh/id_rsa.pub` to the raspberry pi's `/home/pi/.ssh/authorized_keys`.
+Ansible works by sshing into the raspberry pi so you need to make sure that the user on the machine that you are running the ansible commands with can ssh into the raspberry pi as the pi user. To do so add your `~/.ssh/id_rsa.pub` to the raspberry pi's `/home/pi/.ssh/authorized_keys`.
 
 The ansible scripts will install some software as root, using sudo. Make sure that your `pi` user can become root without password input. On the rasperry pi run `visudo` on it and add this line at the end of the file`pi ALL=(ALL) NOPASSWD: ALL`.
 
