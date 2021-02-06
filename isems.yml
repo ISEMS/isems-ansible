@@ -31,9 +31,14 @@
             }
     - role: geerlingguy.git
       become: true
+      tags: [app, api]
     - role: geerlingguy.nodejs
       become: true
+      tags: app
     - role: ocha.yarn
       become: true
-    - frontend
-    - flask
+      tags: app
+    - role: frontend
+      tags: app
+    - role: flask
+      tags: api
