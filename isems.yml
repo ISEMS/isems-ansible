@@ -1,6 +1,6 @@
 ---
 - name: Manage ISEMS-PI
-  hosts: isems-raspi
+  hosts: isems_raspi
   remote_user: pi
   become_method: sudo
 
