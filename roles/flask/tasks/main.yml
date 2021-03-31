@@ -13,7 +13,7 @@
   git:
     repo: 'https://github.com/ISEMS/isems-data-collector.git'
     dest: "{{ project_path }}"
-    version: mqtt
+    version: master
 
 - name: Install virtualenv
   pip:
