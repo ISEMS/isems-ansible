@@ -1,0 +1,7 @@
+---
+- name: install mosquitto
+  become: yes
+  when: enable_mqtt
+  package:
+    name: mosquitto
+    state: present
