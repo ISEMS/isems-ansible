@@ -50,16 +50,19 @@
     name: "update isems-data"
     minute: "*/15"
     job: "env FLASK_APP={{ project_path }}/app.py DATABASE_URL={{database_url}} ISEMS_ROUTER_IPS={{ node_ips | join(',') }} {{ virtualenv_path }}/bin/flask update-data"
-    state: absent
+    state: "{{ 'present' if enable_polling else 'absent' }}"
 
 - name: install isems-mqtt-listener service systemd unit file
   become: yes
+  when: enable_mqtt
   template:
     src: isems-mqtt-listener.service.j2
     dest: /etc/systemd/system/isems-mqtt-listener.service
 
 - name: start isems-mqtt-listener service
   become: yes
-  ansible.builtin.service:
+  when: enable_mqtt
+  ansible.builtin.systemd:
     name: isems-mqtt-listener
-    state: reloaded
+    daemon_reload: true
+    state: restarted

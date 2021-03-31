@@ -2,6 +2,19 @@
 project_path: "/home/{{ ansible_ssh_user }}/isems-data-collector"
 virtualenv_path: "{{ project_path }}/virtualenv"
 database_url: "sqlite:////home/{{ ansible_ssh_user }}/isems-data-collector.sqlite"
+
+# You can fetch data via manual polling of nodes or via subscribing
+# to a MQTT broker. If you set `enable_mqtt` to true, ansible will
+# also install an mqtt broker on this machine to which you can then subscribe directly.
+# Enable or disable the options that you prefer here.
+enable_polling: false
+enable_mqtt: true
+
+# If you set `enable_mqtt` above, configure the server here.
+# In most circumstances, you probably want to use localhost here.
+mqtt_server: "localhost"
+
+# If you set `enable_polling` above, provide a list of ip addresses to check here
 node_ips:
   - 10.36.158.33
   - 10.31.1.229

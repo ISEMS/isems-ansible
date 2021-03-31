@@ -23,10 +23,11 @@ The configuration of the application is slightly different for every installatio
 
 1. Edit the `hosts` file at the root of this repository and put the IP of the raspberry pi there. It could for example look like this:
 ```
-[isems-raspi]
+[isems_raspi]
 2001:bc8:600:11c::1    ansible_user=pi ansible_ssh_user=pi ansible_python_interpreter=/usr/bin/python3
 ```
-2. Edit the `node_ips` section in `roles/flask/vars/main.yml`. It should contain a list of all the isems node IPs that the data-collector should collect data from. 
+2. Check out the comments in `roles/flask/vars/main.yml`. To configure your preferred mode of 
+   fetching data.
 
 
 ## Installation

@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Environment=DATABASE_URL={{database_url}}
-Environment=MQTT_SERVER=broker.hivemq.com
+Environment=MQTT_SERVER={{mqtt_server}}
 ExecStart={{ virtualenv_path }}/bin/flask subscribe
 WorkingDirectory={{project_path}}
 Restart=always

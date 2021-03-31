@@ -42,3 +42,5 @@
       tags: app
     - role: flask
       tags: api
+    - role: mosquitto
+      tags: mqtt

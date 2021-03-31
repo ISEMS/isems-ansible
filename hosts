@@ -1,2 +1,2 @@
-[isems-raspi]
+[isems_raspi]
 REPLACE_THIS_WITH_RASPI_IP   ansible_user=pi ansible_ssh_user=pi ansible_python_interpreter=/usr/bin/python3
