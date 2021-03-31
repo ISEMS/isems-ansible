@@ -1,0 +1,17 @@
+[Unit]
+Description=Gunicorn instance to serve isems-data-collector
+After=network.target
+
+[Service]
+User={{ ansible_ssh_user }}
+Group=www-data
+WorkingDirectory={{project_path}}
+Environment="PATH={{virtualenv_path}}/bin/"
+Environment="DATABASE_URL={{database_url}}"
+{% if sentry_dsn is defined %}
+Environment=SENTRY_DSN={{ sentry_dsn }}
+{% endif %}
+ExecStart={{virtualenv_path}}/bin/gunicorn --workers 3 --bind 127.0.0.1:9000 app:app
+
+[Install]
+WantedBy=multi-user.target

@@ -31,18 +31,20 @@
   args:
       chdir: "{{ project_path }}"
 
-- name: Create uwsgi config
+- name: template systemd service config
+  become: yes
   template:
-    src: uwsgi-isems.ini.j2
-    dest: /etc/uwsgi/apps-enabled/uwsgi-isems.ini
-    backup: yes
-  become: yes
+    src: data-collector-server.j2
+    dest: /etc/systemd/system/isems-data-collector-server.service
 
-- name: Restart uwsgi
-  systemd:
-    name: uwsgi
-    state: restarted
+- name: start systemd app service
   become: yes
+  systemd:
+    name: "isems-data-collector-server.service"
+    state: restarted
+    enabled: yes
+    daemon_reload: true
+
 
 - name: Add cronjob to download Data
   cron:
