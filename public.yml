@@ -56,6 +56,7 @@
         - access_log "/var/log/nginx/access.log"
       nginx_sites:
         isems:
+          - listen [::]:80
           - listen 80
           - server_name api.isems.de
           - location / {
@@ -63,6 +64,7 @@
               include      /etc/nginx/uwsgi_params;
               add_header Access-Control-Allow-Origin *;
             }
+          - listen [::]:443 ssl
           - listen 443 ssl
           - ssl_certificate /etc/letsencrypt/live/api.isems.de/fullchain.pem
           - ssl_certificate_key /etc/letsencrypt/live/api.isems.de/privkey.pem
